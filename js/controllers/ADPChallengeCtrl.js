@@ -4,7 +4,8 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
     $scope.title = "ADP Challenge - Git Repositories";
     $scope.tableHeader = [];
     $scope.paginationRow = 0;
-    $scope.tableLimit = 8;
+    $scope.paginationActive = true;
+    $scope.tableLimit = 7;
     $scope.sortField = '';
     $scope.paginationList = [];
     $scope.paginationButtonsList = [];
@@ -23,7 +24,7 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
 
 
     $scope.tablePageLimit = [
-        {limit: 8, selected: true },
+        {limit: 8},
         {limit: 12},
         {limit: 16}
     ];
@@ -68,7 +69,7 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
     // }
 
     let buildPagination = function(obj){
-        // console.log(obj);
+        console.log(obj);
         
         let maxPage = obj.length / $scope.tableLimit;
         // console.log(maxPage);
@@ -78,7 +79,7 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
             // console.log(i);
             
         }
-        // console.log($scope.paginationList);
+        console.log($scope.paginationList);
         
     };
 
@@ -108,6 +109,18 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
     $scope.goToPage = function(page){
         $scope.paginationRow = page;  
         buildListButtonsPagination();      
+    }
+
+    $scope.activePagination = function(){
+        $scope.paginationActive = !$scope.paginationActive;
+        if($scope.paginationActive == false){
+            $scope.tableLimit = "";
+        }else{
+            $scope.tableLimit = 7;
+        }
+        console.log($scope.tableLimit);
+        console.log($scope.paginationActive);
+        
     }
 
     $scope.sortWith = function(field){

@@ -14,3 +14,8 @@
 .tableRow{
     height: 50px !important;
 }
+
+.inputPagination{
+    margin-top: 6px;
+    margin-right: 10px;
+}
