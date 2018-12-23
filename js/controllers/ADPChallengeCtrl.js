@@ -7,6 +7,8 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
     $scope.tableLimit = 8;
     $scope.sortField = '';
     $scope.paginationList = [];
+    $scope.paginationButtonsList = [];
+    $scope.page = 0;
 
     // $scope.nameTest = "felipe_martins_da_silva";
 
@@ -32,6 +34,9 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
             console.log(data);
             // buildTableHeader(data.data[0]);
             buildPagination(data.data);
+            // buildPaginationButtonsList();
+
+            buildListButtonsPagination();
             
         }).catch(function(data, status){
             $scope.message = "Erro ao carregar os repositórios do Git: " + data;
@@ -63,36 +68,52 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
     // }
 
     let buildPagination = function(obj){
-        console.log(obj);
+        // console.log(obj);
         
         let maxPage = obj.length / $scope.tableLimit;
-        console.log(maxPage);
+        // console.log(maxPage);
         
         for(let i = 0; i < maxPage; i++){
             $scope.paginationList.push(i)
-            console.log(i);
+            // console.log(i);
             
         }
-        console.log($scope.paginationList);
+        // console.log($scope.paginationList);
         
     };
 
-    $scope.paginatorChange = function(){
-        setTimeout(() => {
-            buildPagination($scope.publicRespositories);            
-        }, 1000);
-    };
+   let buildListButtonsPagination = function(){
+        if($scope.paginationList.length <= 7){
+            $scope.paginationButtonsList = $scope.paginationList;
+        }
+        else if($scope.paginationRow < 4){
+            // console.log($scope.paginationRow);
+            // console.log('1');
+            $scope.paginationButtonsList = $scope.paginationList.slice(1,7);
+        }
+        else if($scope.paginationRow > ($scope.paginationList.length - 4)){
+            // console.log($scope.paginationRow);
+            // console.log('2');
+            $scope.paginationButtonsList = $scope.paginationList.slice($scope.paginationList.length - 5);
+        }
+        else{
+            // console.log($scope.paginationRow);
+            // console.log('3');
+            $scope.paginationButtonsList = $scope.paginationList.slice(($scope.paginationRow - 1), ($scope.paginationRow + 4));
+        };
+
+        // console.log($scope.paginationButtonsList);
+   }
 
     $scope.goToPage = function(page){
-        $scope.paginationRow = page; 
-        console.log(page);
-        
+        $scope.paginationRow = page;  
+        buildListButtonsPagination();      
     }
 
     $scope.sortWith = function(field){
         $scope.sortField = field;
         $scope.sortDirection = !$scope.sortDirection;
-        console.log($scope.sortField);
+        // console.log($scope.sortField);
     };
 
     getPublicRepositories();
