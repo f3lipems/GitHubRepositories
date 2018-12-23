@@ -34,37 +34,25 @@
 
     <div class="container" ng-if="publicRespositories.length > 0">
 
+        <!-- Filter e Active Pagination -->
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex flex-wrap">
-            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 input_top">
-
-                <!-- Revisar Parei aqui!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-                <select class="form-control" ng-model="tableLimit">
-                    <option value="">Exibir todas linhas</i></option>
-                    <option ng-repeat="pageLimit in tablePageLimit">{{pageLimit.limit + ' Linhas'}}</option>
-                </select>
-                {{tableLimit}}
-
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 input_top d-flex">
+                <input type="checkbox" ng-model="paginationActive" ng-change="activePagination()" aria-label="Paginação" id="actPaginate" class="inputPagination">
+                <label for="actPaginate"> Ativar Paginação </label>               
             </div>
-
             <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 input_top">
                 <input type="text" class="form-control" ng-model="searchRepo" placeholder="Pesquisar...">
             </div>
-
         </div>
 
         <!-- Table of repositories -->
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 
+            <!-- Grid of table -->
             <table class="table table-responsive">
                 <tr>
                     <th ng-click="sortWith(key)" ng-repeat="(key, val) in publicRespositories[0]">{{key | nameHeader}}</th>
                 </tr>
-                <!-- <tr ng-repeat="repo in publicRespositories | filter: searchRepo | orderBy:sortField:sortDirection | pagination:[paginationRow,tableLimit] | limitTo:tableLimit" ng-click="repo.selected = ! repo.selected" ng-class="{'selectedRow': repo.selected}">
-                    <td ng-repeat="rowHeader in tableHeader">
-                        <span ng-if="rowHeader != 'owner'">{{repo[rowHeader] | ellipsis:20}}</span>
-                        <span ng-if="rowHeader === 'owner'">{{repo.owner.login | ellipsis:30}}</span>
-                    </td>
-                </tr> -->
                 <tr class="tableRow" ng-repeat="repo in publicRespositories | filter: searchRepo | orderBy:sortField:sortDirection | pagination:[paginationRow,tableLimit] | limitTo:tableLimit" ng-click="repo.selected = ! repo.selected" ng-class="{'selectedRow': repo.selected}">
                     <td ng-repeat="(key, val) in repo">
                         <span ng-if="key != 'owner'" ng-click="sortField = key; sortWith();">{{val | ellipsis:20}}</span>
@@ -74,7 +62,7 @@
             </table>
 
             <!-- Paginator -->
-            <nav class="d-flex d-flex justify-content-center" aria-label="Paginação">
+            <nav class="d-flex d-flex justify-content-center" aria-label="Paginação" ng-if="paginationActive">
                 <ul class="pagination">
                     <li class="page-item page-link" ng-click="goToPage(0)">Primeira</a></li>
                     <li class="page-item page-link" ng-click="goToPage(page - 1)" ng-repeat="page in paginationButtonsList" ng-if="page < (paginationList.length)  && page > 1">{{page}}</a></li>
