@@ -65,7 +65,7 @@
                         <span ng-if="rowHeader === 'owner'">{{repo.owner.login | ellipsis:30}}</span>
                     </td>
                 </tr> -->
-                <tr ng-repeat="repo in publicRespositories | filter: searchRepo | orderBy:sortField:sortDirection | pagination:[paginationRow,tableLimit] | limitTo:tableLimit" ng-click="repo.selected = ! repo.selected" ng-class="{'selectedRow': repo.selected}">
+                <tr class="tableRow" ng-repeat="repo in publicRespositories | filter: searchRepo | orderBy:sortField:sortDirection | pagination:[paginationRow,tableLimit] | limitTo:tableLimit" ng-click="repo.selected = ! repo.selected" ng-class="{'selectedRow': repo.selected}">
                     <td ng-repeat="(key, val) in repo">
                         <span ng-if="key != 'owner'" ng-click="sortField = key; sortWith();">{{val | ellipsis:20}}</span>
                         <span ng-if="key === 'owner'" ng-click="sortWith('key')">{{repo.owner.login | ellipsis:30}}</span>
@@ -77,7 +77,7 @@
             <nav class="d-flex d-flex justify-content-center" aria-label="Paginação">
                 <ul class="pagination">
                     <li class="page-item page-link" ng-click="goToPage(0)">Primeira</a></li>
-                    <li class="page-item page-link" ng-click="goToPage(page)" ng-repeat="page in paginationList" ng-if="page < (paginationList.length - 1)">{{page}}</a></li>
+                    <li class="page-item page-link" ng-click="goToPage(page - 1)" ng-repeat="page in paginationButtonsList" ng-if="page < (paginationList.length)  && page > 1">{{page}}</a></li>
                     <li class="page-item page-link" ng-click="goToPage(paginationList.length - 1)">Última</a></li>
                 </ul>
             </nav>

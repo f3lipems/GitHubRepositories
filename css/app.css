@@ -10,3 +10,7 @@
 .selectedRow{
     background: gray !important;
 }
+
+.tableRow{
+    height: 50px !important;
+}
