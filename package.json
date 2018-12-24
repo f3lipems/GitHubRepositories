@@ -18,5 +18,16 @@
   "bugs": {
     "url": "https://github.com/felipe-vsr/ADPChallenge/issues"
   },
-  "homepage": "https://github.com/felipe-vsr/ADPChallenge#readme"
+  "homepage": "https://github.com/felipe-vsr/ADPChallenge#readme",
+  "dependencies": {
+    "angular": "^1.5.11",
+    "angular-messages": "^1.5.11",
+    "angular-mocks": "^1.5.11",
+    "angular-ui-router": "^1.0.20",
+    "jasmine-core": "^3.3.0",
+    "karma": "^3.1.4",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^2.0.1",
+    "karma-spec-reporter": "0.0.32"
+  }
 }
