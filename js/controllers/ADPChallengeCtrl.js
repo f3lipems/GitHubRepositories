@@ -2,6 +2,8 @@ angular.module("ADPChallenge", ["ngMessages"]);
 angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, $filter, publicRespositories, subscriptions) {
     
     $scope.title = "ADP Challenge - Git Repositories";
+
+    //Table attributes
     $scope.tableHeader = [];
     $scope.paginationRow = 0;
     $scope.paginationActive = true;
@@ -9,102 +11,46 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
     $scope.sortField = '';
     $scope.paginationList = [];
     $scope.paginationButtonsList = [];
-    $scope.page = 0;
 
-    // $scope.nameTest = "felipe_martins_da_silva";
+    //Count attributes
+    $scope.repositoriesSelected = [];
+    $scope.countRepositoriesSelected = 0;
+    $scope.countSubscribersSelected = 0;
 
-    $scope.data = {
-        model: null,
-        availableOptions: [
-          {id: '1', name: 'Option A'},
-          {id: '2', name: 'Option B'},
-          {id: '3', name: 'Option C'}
-        ]
-       };
-
-
-    $scope.tablePageLimit = [
-        {limit: 8},
-        {limit: 12},
-        {limit: 16}
-    ];
 
     let getPublicRepositories = function(){
-        publicRespositories.getPublicRepositories().then(function(data, status){
+        publicRespositories.getPublicRepositories().then(function(data){
             $scope.publicRespositories = data.data;
-            console.log(data);
-            // buildTableHeader(data.data[0]);
-            buildPagination(data.data);
-            // buildPaginationButtonsList();
-
-            buildListButtonsPagination();
             
-        }).catch(function(data, status){
+            buildPagination(data.data);
+            buildListButtonsPagination();
+        }).catch(function(data){
             $scope.message = "Erro ao carregar os repositórios do Git: " + data;
         });
 
     };
 
-    let getSubscriptions = function(url){
-        subscriptions.getSubscriptions(url).then(function(data){
-            $scope.subscriptions = data;
-            console.log(data);
-        }).catch(function(data, status){
-            $scope.message = "Erro ao carregar subscribers do repositório: " + data;
-        });
-    }
-
-    // let buildTableHeader = function(obj){
-    //     Object.keys(obj).forEach(function(header){
-    //         // if(header === 'owner'){
-    //         //     Object.keys(header).forEach(function(header_owner){
-    //         //         $scope.tableHeader.push(header_owner);
-    //         //     });
-    //         // }else{
-    //         //     $scope.tableHeader.push(header);
-    //         // }
-    //         $scope.tableHeader.push(header);
-    //     });
-    //     console.log($scope.tableHeader);
-    // }
-
     let buildPagination = function(obj){
-        console.log(obj);
-        
         let maxPage = obj.length / $scope.tableLimit;
-        // console.log(maxPage);
-        
         for(let i = 0; i < maxPage; i++){
             $scope.paginationList.push(i)
-            // console.log(i);
-            
         }
-        console.log($scope.paginationList);
-        
     };
 
-   let buildListButtonsPagination = function(){
+    let buildListButtonsPagination = function(){
         if($scope.paginationList.length <= 7){
             $scope.paginationButtonsList = $scope.paginationList;
         }
         else if($scope.paginationRow < 4){
-            // console.log($scope.paginationRow);
-            // console.log('1');
             $scope.paginationButtonsList = $scope.paginationList.slice(1,7);
         }
         else if($scope.paginationRow > ($scope.paginationList.length - 4)){
-            // console.log($scope.paginationRow);
-            // console.log('2');
             $scope.paginationButtonsList = $scope.paginationList.slice($scope.paginationList.length - 5);
         }
         else{
-            // console.log($scope.paginationRow);
-            // console.log('3');
             $scope.paginationButtonsList = $scope.paginationList.slice(($scope.paginationRow - 1), ($scope.paginationRow + 4));
         };
-
-        // console.log($scope.paginationButtonsList);
-   }
+    }
 
     $scope.goToPage = function(page){
         $scope.paginationRow = page;  
@@ -118,18 +64,41 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
         }else{
             $scope.tableLimit = 7;
         }
-        console.log($scope.tableLimit);
-        console.log($scope.paginationActive);
-        
     }
+
+    $scope.clickRow = function(repository){
+        repository.selected = ! repository.selected
+ 
+        if(repository.subscribers == undefined){
+            subscriptions.getSubscribers(repository.subscribers_url).then(function(data){
+                repository.subscribers = data;                
+                repository.subscribersCount = data.data.length;               
+                countRepositories();
+            }).catch(function(data){
+                $scope.message = "Erro ao carregar subscribers do repositório: " + data;
+            });
+        }else{
+            countRepositories();
+        }
+    }
+
+    let countRepositories = function(){
+        $scope.countSubscribersSelected = 0;
+        $scope.countRepositoriesSelected = 0;
+        $scope.repositoriesSelected = $scope.publicRespositories.filter(function(repository){
+            if(repository.selected){
+                $scope.countSubscribersSelected = $scope.countSubscribersSelected + repository.subscribersCount;
+                $scope.countRepositoriesSelected = $scope.countRepositoriesSelected + 1;
+                return repository
+            };
+        });
+    };
 
     $scope.sortWith = function(field){
         $scope.sortField = field;
         $scope.sortDirection = !$scope.sortDirection;
-        // console.log($scope.sortField);
     };
 
     getPublicRepositories();
-    getSubscriptions("https://api.github.com/repos/mojombo/grit/subscribers");
 
 });

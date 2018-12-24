@@ -1,6 +1,6 @@
 angular.module("ADPChallenge").filter("ellipsis", function(){
     return function(input, size){
-        if(input === null || undefined){
+        if(input === null || input === undefined){
             input = ""
         }
         input = input.toString();
