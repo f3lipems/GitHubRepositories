@@ -34,3 +34,6 @@ Comandos:
 	## Para rodar os testes
 	~/karma start
 	~/karma start --reporters spec
+
+
+
