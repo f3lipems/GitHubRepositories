@@ -1,5 +1,5 @@
 angular.module("ADPChallenge", ["ngMessages"]);
-angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, $filter, publicRespositories, subscribers) {
+angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, publicRespositories, subscribers) {
     
     $scope.title = "ADP Challenge - Git Repositories";
 
@@ -83,18 +83,6 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
             countRepositories();
         }
     }
-
-    let countRepositories = function(){
-        $scope.countSubscribersSelected = 0;
-        $scope.countRepositoriesSelected = 0;
-        $scope.repositoriesSelected = $scope.publicRespositories.filter(function(repository){
-            if(repository.selected){
-                $scope.countSubscribersSelected = $scope.countSubscribersSelected + repository.subscribersCount;
-                $scope.countRepositoriesSelected = $scope.countRepositoriesSelected + 1;
-                return repository
-            };
-        });
-    };
 
     $scope.sortWith = function(field){
         $scope.sortField = field;

@@ -24,6 +24,7 @@ module.exports = function (config) {
             // Application
             'js/app.js',
             'js/controllers/ADPChallengeCtrl.js',
+            'js/controllers/ADPChallengeCtrl.spec.js',
             'js/config/configValue.js',
 
             // Services
