@@ -56,11 +56,8 @@ describe("Spec ADPChallenge controller", function(){
         it("Attribute countSubscribersSelected has the correct value", function(){
             expect($rootScope.countSubscribersSelected).toEqual(0);
         });
-        it("Attribute requestId has the correct value", function(){
-            expect($rootScope.requestId).toEqual([0]);
-        });
-        it("Attribute positionId has the correct value", function(){
-            expect($rootScope.positionId).toEqual(0);
+        it("Attribute lastId has the correct value", function(){
+            expect($rootScope.lastId).toEqual(0);
         });
         it("Attribute publicRespositories has the correct value", function(){
             expect($rootScope.publicRespositories).toEqual([]);
