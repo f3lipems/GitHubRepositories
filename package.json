@@ -2,10 +2,7 @@
   "name": "adpchallenge",
   "version": "1.0.0",
   "description": "Git public repositories",
-  "main": "js/app.js",
-  "directories": {
-    "lib": "lib"
-  },
+  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
