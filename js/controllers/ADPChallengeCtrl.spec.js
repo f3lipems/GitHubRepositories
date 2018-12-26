@@ -52,9 +52,18 @@ describe("Spec ADPChallenge controller", function(){
         });
         it("Attribute countRepositoriesSelected has the correct value", function(){
             expect($rootScope.countRepositoriesSelected).toEqual(0);
-        });
+        });        
         it("Attribute countSubscribersSelected has the correct value", function(){
             expect($rootScope.countSubscribersSelected).toEqual(0);
+        });
+        it("Attribute requestId has the correct value", function(){
+            expect($rootScope.requestId).toEqual([0]);
+        });
+        it("Attribute positionId has the correct value", function(){
+            expect($rootScope.positionId).toEqual(0);
+        });
+        it("Attribute publicRespositories has the correct value", function(){
+            expect($rootScope.publicRespositories).toEqual([]);
         });
     });
 
@@ -70,6 +79,9 @@ describe("Spec ADPChallenge controller", function(){
         });
         it("Function sortWith exist", function(){
             expect($rootScope.sortWith).toBeDefined();
+        });
+        it("Function nextRequest exist", function(){
+            expect($rootScope.nextRequest).toBeDefined();
         });
     });
     
