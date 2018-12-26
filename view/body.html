@@ -30,13 +30,17 @@
         </table>
 
         <!-- Paginator -->
-        <nav class="d-flex d-flex justify-content-center" aria-label="Paginação" ng-if="paginationActive">
+        <nav class="d-flex d-flex justify-content-around" aria-label="Paginação" ng-if="paginationActive">
+
             <ul class="pagination">
                 <li class="page-item page-link" ng-click="goToPage(0)">Primeira</a></li>
                 <li class="page-item page-link" ng-click="goToPage(page - 1)" ng-repeat="page in paginationButtonsList"
                     ng-if="page < (paginationList.length)  && page > 1">{{page}}</a></li>
                 <li class="page-item page-link" ng-click="goToPage(paginationList.length - 1)">Última</a></li>
             </ul>
+
+            <button type="button" class="btn btn-primary btn-sm" ng-click="nextRequest()">Mais repositórios</button>
+
         </nav>
     </div>
     <hr>
