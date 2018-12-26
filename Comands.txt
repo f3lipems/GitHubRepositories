@@ -1,0 +1,35 @@
+Needs:
+
+	NodeJS
+
+
+Comands for intall workspace:
+
+	npm init - Create package Json
+		Ok
+
+	npm install karma karma-jasmine jasmine-core karma-chrome-launcher --save
+		Ok
+
+	npm install -g karma-cli
+		Ok
+
+	npm install angular@1.5 angular-ui-router angular-mocks@1.5 --save
+		Ok
+
+	npm install karma-spec-reporter --save
+		Ok
+
+	npm intall bootstrap --save
+		ok
+
+	karma init - Crete data config of karma 
+
+	******************************
+
+	## Run 
+	~/karma start
+	~/karma start --reporters spec
+
+
+

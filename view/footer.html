@@ -1,0 +1,24 @@
+<div class="container" ng-if="publicRespositories.length > 0">
+
+    <!-- Sum of repositories -->
+    <div class="d-flex d-flex justify-content-around mb-3">
+        <h3>Repositórios Selecionados</h3>
+        <h3> {{countRepositoriesSelected}}</h3>
+    </div>
+
+    <div>
+        <!-- Grid of selected repositories -->
+        <table class="table table-responsive">
+            <tr>
+                <th ng-click="sortWithSelected(key)" ng-repeat="(key, val) in repositoriesSelected[0]">{{key | nameHeader}}</th>
+            </tr>
+            <tr class="tableRow" ng-repeat="repo in repositoriesSelected | filter: searchRepo | orderBy:sortFieldSelected:sortDirectionSelected">
+                <td ng-repeat="(key, val) in repo">
+                    <span ng-if="key != 'owner'">{{val}}</span>
+                    <span ng-if="key === 'owner'">{{repo.owner.login}}</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
