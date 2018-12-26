@@ -4,6 +4,7 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
     $scope.title = "ADP Challenge - Git Public Repositories";
 
     //Table attributes
+    $scope.publicRespositories = []
     $scope.tableHeader = [];
     $scope.paginationRow = 0;
     $scope.paginationActive = true;
@@ -12,6 +13,8 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
     $scope.paginationButtonsList = [];
     $scope.sortField = '';
     $scope.sortFieldSelected = '';
+    $scope.requestId = [0];
+    $scope.positionId = 0;
 
     //Count attributes
     $scope.repositoriesSelected = [];
@@ -20,11 +23,14 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
 
 
     let getPublicRepositories = function(){
-        publicRespositories.getPublicRepositories().then(function(data){
-            $scope.publicRespositories = data.data;
+        publicRespositories.getPublicRepositories($scope.requestId[$scope.positionId]).then(function(data){
+            $scope.publicRespositories = $scope.publicRespositories.concat(data.data);
+            console.log($scope.publicRespositories);
             
-            buildPagination(data.data);
+            
+            buildPagination($scope.publicRespositories);
             buildListButtonsPagination();
+            getLastPosition();
         }).catch(function(data){
             $scope.message = "Erro ao carregar os repositórios do Git: " + data;
         });
@@ -32,6 +38,7 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
     };
 
     let buildPagination = function(obj){
+        $scope.paginationList = [];
         let maxPage = obj.length / $scope.tableLimit;
         for(let i = 0; i < maxPage; i++){
             $scope.paginationList.push(i)
@@ -64,6 +71,12 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
             };
         });
     };
+
+    let getLastPosition = function(){
+        if($scope.publicRespositories[$scope.publicRespositories.length - 1].id > $scope.requestId[$scope.requestId.length - 1])
+        $scope.requestId.push($scope.publicRespositories[$scope.publicRespositories.length - 1].id);
+        console.log($scope.requestId);
+    }
 
     $scope.goToPage = function(page){
         $scope.paginationRow = page;  
@@ -103,6 +116,11 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
         $scope.sortFieldSelected = field;
         $scope.sortDirectionSelected = !$scope.sortDirectionSelected;
     };
+
+    $scope.nextRequest = function(){
+        $scope.positionId = $scope.positionId + 1 
+        getPublicRepositories();
+    }
 
     getPublicRepositories();
 
