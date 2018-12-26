@@ -13,8 +13,7 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
     $scope.paginationButtonsList = [];
     $scope.sortField = '';
     $scope.sortFieldSelected = '';
-    $scope.requestId = [0];
-    $scope.positionId = 0;
+    $scope.lastId = 0
 
     //Count attributes
     $scope.repositoriesSelected = [];
@@ -22,7 +21,7 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
     $scope.countSubscribersSelected = 0;
 
     let getPublicRepositories = function(){
-        publicRespositories.getPublicRepositories($scope.requestId[$scope.positionId]).then(function(data){
+        publicRespositories.getPublicRepositories($scope.lastId).then(function(data){
             $scope.publicRespositories = $scope.publicRespositories.concat(data.data);
 
             buildPagination($scope.publicRespositories);
@@ -70,8 +69,9 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
     };
 
     let getLastPosition = function(){
-        if($scope.publicRespositories[$scope.publicRespositories.length - 1].id > $scope.requestId[$scope.requestId.length - 1])
-        $scope.requestId.push($scope.publicRespositories[$scope.publicRespositories.length - 1].id);
+        if($scope.publicRespositories[$scope.publicRespositories.length - 1].id > $scope.lastId){
+            $scope.lastId = $scope.publicRespositories[$scope.publicRespositories.length - 1].id;
+        }
     }
 
     $scope.goToPage = function(page){
@@ -114,7 +114,6 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
     };
 
     $scope.nextRequest = function(){
-        $scope.positionId = $scope.positionId + 1 
         getPublicRepositories();
     }
 
