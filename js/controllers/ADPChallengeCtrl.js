@@ -21,13 +21,10 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
     $scope.countRepositoriesSelected = 0;
     $scope.countSubscribersSelected = 0;
 
-
     let getPublicRepositories = function(){
         publicRespositories.getPublicRepositories($scope.requestId[$scope.positionId]).then(function(data){
             $scope.publicRespositories = $scope.publicRespositories.concat(data.data);
-            console.log($scope.publicRespositories);
-            
-            
+
             buildPagination($scope.publicRespositories);
             buildListButtonsPagination();
             getLastPosition();
@@ -75,7 +72,6 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
     let getLastPosition = function(){
         if($scope.publicRespositories[$scope.publicRespositories.length - 1].id > $scope.requestId[$scope.requestId.length - 1])
         $scope.requestId.push($scope.publicRespositories[$scope.publicRespositories.length - 1].id);
-        console.log($scope.requestId);
     }
 
     $scope.goToPage = function(page){
