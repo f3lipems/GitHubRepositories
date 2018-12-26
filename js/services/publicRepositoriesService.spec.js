@@ -13,10 +13,10 @@ describe("Spec public repositories service", function(){
     it("Service request exist", function(){
         expect(publicRespositoriesSpec.getPublicRepositories('http://github.com/repositories')).toBeDefined
     });
-    it("Service request not to be Null", function(){
+    it("Service request is not Null", function(){
         expect(publicRespositoriesSpec.getPublicRepositories('http://github.com/repositories')).not.toBeNull();
     });
-    it("Service request not to be Undefined", function(){
+    it("Service request is not Undefined", function(){
         expect(publicRespositoriesSpec.getPublicRepositories('http://github.com/repositories')).not.toBeUndefined();
     });
 

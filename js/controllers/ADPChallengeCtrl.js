@@ -1,16 +1,17 @@
-angular.module("ADPChallenge", ["ngMessages"]);
+angular.module("ADPChallenge", []);
 angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, publicRespositories, subscribers) {
     
-    $scope.title = "ADP Challenge - Git Repositories";
+    $scope.title = "ADP Challenge - Git Public Repositories";
 
     //Table attributes
     $scope.tableHeader = [];
     $scope.paginationRow = 0;
     $scope.paginationActive = true;
     $scope.tableLimit = 7;
-    $scope.sortField = '';
     $scope.paginationList = [];
     $scope.paginationButtonsList = [];
+    $scope.sortField = '';
+    $scope.sortFieldSelected = '';
 
     //Count attributes
     $scope.repositoriesSelected = [];
@@ -52,6 +53,18 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
         };
     }
 
+    let countRepositories = function(){
+        $scope.countSubscribersSelected = 0;
+        $scope.countRepositoriesSelected = 0;
+        $scope.repositoriesSelected = $scope.publicRespositories.filter(function(repository){
+            if(repository.selected){
+                $scope.countSubscribersSelected = $scope.countSubscribersSelected + repository.subscribers;
+                $scope.countRepositoriesSelected = $scope.countRepositoriesSelected + 1;
+                return repository;
+            };
+        });
+    };
+
     $scope.goToPage = function(page){
         $scope.paginationRow = page;  
         buildListButtonsPagination();      
@@ -67,14 +80,11 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
     }
 
     $scope.clickRow = function(repository){
-        repository.selected = ! repository.selected
-        console.log(repository);
-        
+        repository.selected = ! repository.selected        
  
         if(repository.subscribers == undefined){
-            subscribers.getSubscribers(repository.subscribers_url).then(function(data){
-                repository.subscribers = data;                
-                repository.subscribersCount = data.data.length;               
+            subscribers.getSubscribers(repository.subscribers_url).then(function(data){                
+                repository.subscribers = data.data.length;               
                 countRepositories();
             }).catch(function(data){
                 $scope.message = "Erro ao carregar subscribers do repositório: " + data;
@@ -87,6 +97,11 @@ angular.module("ADPChallenge").controller("ADPChallengeCtrl", function ($scope, 
     $scope.sortWith = function(field){
         $scope.sortField = field;
         $scope.sortDirection = !$scope.sortDirection;
+    };
+    
+    $scope.sortWithSelected = function(field){
+        $scope.sortFieldSelected = field;
+        $scope.sortDirectionSelected = !$scope.sortDirectionSelected;
     };
 
     getPublicRepositories();
