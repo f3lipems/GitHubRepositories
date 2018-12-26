@@ -38,6 +38,9 @@ describe("Spec ADPChallenge controller", function(){
         it("Attribute sortField has the correct value", function(){
             expect($rootScope.sortField).toEqual('');
         });
+        it("Attribute sortDirectionSelected has the correct value", function(){
+            expect($rootScope.sortDirectionSelected).toEqual('');
+        });
         it("Attribute paginationList has the correct value", function(){
             expect($rootScope.paginationList).toEqual([]);
         });
