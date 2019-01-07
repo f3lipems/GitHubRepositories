@@ -17,6 +17,11 @@
     <script src="js/controllers/ADPChallengeCtrl.js"></script>
     <script src="js/services/publicRepositoriesService.js"></script>
     <script src="js/services/subscribersService.js"></script>
+
+    <script src="js/directives/headerDirective.js"></script>
+    <script src="js/directives/bodyDirective.js"></script>
+    <script src="js/directives/footerDirective.js"></script>
+
     <script src="js/filters/headerFilter.js"></script>
     <script src="js/filters/ellipsisFilter.js"></script>
     <script src="js/filters/paginationFilter.js"></script>
@@ -25,17 +30,11 @@
 </head>
 <body ng-controller="ADPChallengeCtrl">
 
-    <header>
-        <div ng-include="'view/header.html'"></div>
-    </header>
+    <header-directive></header-directive>
 
-    <section>
-        <div ng-include="'view/body.html'"></div>
-    </section>
+    <body-directive></body-directive>
 
-    <footer>
-        <div ng-include="'view/footer.html'"></div>
-    </footer>
+    <footer-directive></footer-directive>
 
 </body>
 </html>
