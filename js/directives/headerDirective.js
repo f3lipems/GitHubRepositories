@@ -10,6 +10,11 @@ angular.module("ADPChallenge").directive("headerDirective", function(){
         // E - Diretiva restrita como elemento;
         // C - Diretiva restrita a classe do elemento;
         // M - Diretiva restritaao comentário do elemento.
-        restrict: "E"
+        restrict: "E",
+        scope: {
+            head: "@head",
+            subs: "=subs",
+            respositories: "="
+        }
     }
 });
